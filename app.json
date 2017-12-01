@@ -1,0 +1,21 @@
+{
+  "name": "wepa-alive",
+  "scripts": {
+  },
+  "env": {
+    "HEROKU_POSTGRESQL_GRAY_URL": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+    "heroku-postgresql",
+    "heroku-postgresql"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/java"
+    }
+  ]
+}
