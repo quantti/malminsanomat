@@ -11,11 +11,11 @@ public class AliveApplication {
     }
 
     public static String githubUrl() {
-        return "";
+        return "https://github.com/quantti/wepa-alive";
     }
 
     public static String travisUrl() {
-        return "";
+        return "https://travis-ci.org/quantti/wepa-alive";
     }
 
     public static String herokuUrl() {
