@@ -1,6 +1,7 @@
 .gradle
 /build/
 /target/
+.travis.yml
 
 # Ignore Gradle GUI config
 gradle-app.setting
