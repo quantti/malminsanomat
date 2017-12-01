@@ -19,6 +19,6 @@ public class AliveApplication {
     }
 
     public static String herokuUrl() {
-        return "";
+        return "https://limitless-sea-94522.herokuapp.com/";
     }
 }
