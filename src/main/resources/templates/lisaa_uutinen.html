@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Malmin Sanomat</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    </head>
+    <div class="container">
+        <h3>Lisää uutinen</h3>
+        <!--TODO: testaa tekijät-listaus -->
+
+        <main role="main">
+            <form>
+                <div class="form-group">
+                    <label for="tekija">Tekijä(t), erota useammat pilkulla</label>
+                    <input type="text" class="form-control" id="tekija" aria-describedby="tekija" placeholder="Syötä tekijä(t)">
+                </div>
+                <div class="form-group">
+                    <label for="otsikko">Uutisen otsikko</label>
+                    <input type="text" class="form-control" id="otsikko" placeholder="Uutisen otsikko">
+                </div>
+                <div class="form-group">
+                    <label for="ingressi">Uutisen ingressi</label>
+                    <input type="text" class="form-control" id="ingressi" placeholder="Uutisen ingressi">
+                </div>
+                <div class="form-group">
+                    <label for="teksti">Uutisen teksti</label>
+                    <input type="text" class="form-control" id="teksti" placeholder="Uutisen teksti">
+                </div>
+                <div class="form-group">
+                    <label for="kuva">Uutisen kuva</label>
+                    <input type="file" class="form-control" id="kuva">
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+
+
+
+        </main>
+
+        <footer class="footer">
+            <p>&copy; Kari Vänttinen 2017</p>
+        </footer>
+
+    </div> <!-- /container -->
+</html>

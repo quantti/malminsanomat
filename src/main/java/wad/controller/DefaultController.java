@@ -6,25 +6,21 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import wad.domain.Item;
-import wad.repository.ItemRepository;
+import wad.domain.Uutinen;
+import wad.repository.UutinenRepository;
+import wad.repository.UutiskuvaRepository;
 
 @Controller
-public class AliveController {
+public class DefaultController {
 
     @Autowired
-    private ItemRepository itemRepository;
+    private UutinenRepository uutinenRepository;
+    @Autowired
+    private UutiskuvaRepository uutiskuvaRepo;
 
     @GetMapping("/")
     public String list(Model model) {
-        model.addAttribute("items", itemRepository.findAll());
+        model.addAttribute("uutiset", uutinenRepository.findAll());
         return "index";
-    }
-
-    @PostMapping("/")
-    public String create(@RequestParam String name) {
-        Item i = new Item(name);
-        itemRepository.save(i);
-        return "redirect:/";
     }
 }
