@@ -14,6 +14,8 @@ import wad.domain.Tekija;
  */
 public interface TekijaRepository extends JpaRepository<Tekija, Long> {
 
+    public Tekija findByNimi(String nimi);
+
     public Tekija findByKayttajanimi(String username);
     
 }

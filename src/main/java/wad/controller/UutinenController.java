@@ -9,9 +9,13 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -56,14 +60,18 @@ public class UutinenController {
         uutinen.setKuvaId(kuvaId);
         uutinen.setOtsikko(otsikko);
         uutinen.setTeksti(teksti);
-//        String[] tekijatArray = tekijat.split(",");
-//        for (String nimi : tekijatArray) {
-//            Tekija tekija = new Tekija();
-//            tekija.setNimi(nimi.trim());
-//            tekijaRepo.save(tekija);
-//            uutinen.setTekijat(new ArrayList<>());
-//            uutinen.getTekijat().add(tekija);
-//        }
+        String[] tekijatArray = tekijat.split(",");
+        for (String nimi : tekijatArray) {
+            Tekija tekija = new Tekija();
+            tekija.setNimi(nimi.trim());
+            if (tekijaRepo.findByNimi(nimi) == null) {
+                tekijaRepo.save(tekija);
+            }
+            if (uutinen.getTekijat() == null) {
+                uutinen.setTekijat(new ArrayList<>());
+            }
+            uutinen.getTekijat().add(tekija);
+        }
         uutinen.setJulkaisuaika(LocalDate.now());
         uutinenRepo.save(uutinen);
         return "redirect:/Ge6TQjGctR";
@@ -77,14 +85,24 @@ public class UutinenController {
         uutinenRepo.save(uutinen);
         uutinenRepo.flush();
         model.addAttribute("uutinen", uutinen);
+        Pageable luetuimmat = PageRequest.of(0, 10, Sort.Direction.DESC, "lukukerrat");
+        Pageable kymmenenUusinta = PageRequest.of(0, 5, Sort.Direction.ASC, "julkaisuaika");
+        model.addAttribute("uusimmat", uutinenRepo.findAll(kymmenenUusinta));
+        model.addAttribute("luetuimmat", uutinenRepo.findAll(luetuimmat));
         return "uutinen";
     }
 
-    @GetMapping("kuvapankki/{id}")
+    @GetMapping("/kuvapankki/{id}")
     @Transactional
     @ResponseBody
     public byte[] naytaKuva(@PathVariable Long id) {
         return uutiskuvaRepo.findById(id).get().getSisalto();
+    }
+    
+    @DeleteMapping("/uutinen/{id}")
+    public String poistaUutinen(@PathVariable Long id) {
+        uutinenRepo.deleteById(id);
+        return "redirect:/";
     }
 
 }

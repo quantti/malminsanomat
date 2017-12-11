@@ -11,8 +11,16 @@ a.valikko:hover {
     color: #f2fff2;
     text-decoration: none;
 }
-img {
-    max-width: 520px;
+img.uutiskuva {
     margin-top: 10px;
     margin-left: 10px;
+}
+
+.headimage {
+    max-width: 100%;
+    padding: 1rem;
+}
+
+.headimage > img {
+    width: 100%;
 }

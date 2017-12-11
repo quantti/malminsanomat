@@ -13,9 +13,12 @@
         <main role="main">
             <div class="row">
                 <div class="col-8">
-                    <h3 th:text="${uutinen.otsikko}">Otsikko</h3>
+                    <h2 th:text="${uutinen.otsikko}">Otsikko</h2>
                     <p class="lead" th:text="${uutinen.ingressi}">ingressi</p>
-                    <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" />
+                    <div class="container">
+                        <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="uutiskuva"/>
+                    </div>
+                    <p th:each="tekija : ${uutinen.tekijat}" th:text="${tekija.nimi}">Tekija</p>
                     <p th:text="${uutinen.teksti}">leipäteksti</p>
                 </div>
                 <div th:replace="fragments/oikea_valikko :: oikea_valikko">
