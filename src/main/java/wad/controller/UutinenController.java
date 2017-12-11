@@ -40,6 +40,7 @@ public class UutinenController {
     private TekijaRepository tekijaRepo;
 
     @PostMapping("/lisaa-uutinen")
+    @Transactional
     public String lisaaUutinen(@RequestParam("kuva") MultipartFile kuva, @RequestParam("tekija") String tekijat,
             @RequestParam("otsikko") String otsikko, @RequestParam("ingressi") String ingressi, @RequestParam("teksti") String teksti) throws IOException {
         Long kuvaId = 0L;

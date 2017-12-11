@@ -25,6 +25,6 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Uutiskuva extends AbstractPersistable<Long> {
     
     @Lob
-    @Basic(fetch = FetchType.LAZY)
+    @Basic(fetch = FetchType.EAGER)
     private byte[] sisalto;
 }
