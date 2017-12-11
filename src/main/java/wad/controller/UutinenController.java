@@ -7,7 +7,9 @@ package wad.controller;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -61,12 +63,64 @@ public class UutinenController {
         uutinen.setTeksti(teksti);
         asetaTekijat(uutinen, tekijat);
         asetaKategoriat(uutinen, kategoriat);
-        uutinen.setJulkaisuaika(LocalDate.now());
+        uutinen.setJulkaisuaika(LocalDateTime.now());
         uutinenRepo.save(uutinen);
         uutinenRepo.flush();
         Long uutinenId = uutinen.getId();
         return "redirect:/uutinen/" + uutinenId;
     }
+    
+    @GetMapping("/uutinen/kotimaa")
+    public String kotimaanUutiset(Model model) {
+        List<Uutinen> uutiset = uutinenRepo.findAll();
+        List<Uutinen> uutisetKategorianMukaan = etsiKategoriat(uutiset, "kotimaa");
+        lisaaLuetuimmatJaUusimmat(model);
+        model.addAttribute("uutiset", uutisetKategorianMukaan);
+        return "index";
+    }
+    
+    @GetMapping("/uutinen/paikalliset")
+    public String paikallisetUutiset(Model model) {
+        List<Uutinen> uutiset = uutinenRepo.findAll();
+        List<Uutinen> uutisetKategorianMukaan = etsiKategoriat(uutiset, "paikalliset");
+        lisaaLuetuimmatJaUusimmat(model);
+        model.addAttribute("uutiset", uutisetKategorianMukaan);
+        for (Uutinen uutinen : uutiset) {
+            for (Kategoria k: uutinen.getKategoriat()) {
+                System.out.println(k.getNimi());
+            }
+        }
+        return "index";
+    }
+    
+    @GetMapping("/uutinen/urheilu")
+    public String urheiluUutiset(Model model) {
+        List<Uutinen> uutiset = uutinenRepo.findAll();
+        List<Uutinen> uutisetKategorianMukaan = etsiKategoriat(uutiset, "urheilu");
+        lisaaLuetuimmatJaUusimmat(model);
+        model.addAttribute("uutiset", uutisetKategorianMukaan);
+        for (Uutinen uutinen : uutiset) {
+            for (Kategoria k: uutinen.getKategoriat()) {
+                System.out.println(k.getNimi());
+            }
+        }
+        return "index";
+    }
+    @GetMapping("/uutinen/kulttuuri")
+    public String kulttuuriUutiset(Model model) {
+        List<Uutinen> uutiset = uutinenRepo.findAll();
+        List<Uutinen> uutisetKategorianMukaan = etsiKategoriat(uutiset, "kulttuuri");
+        lisaaLuetuimmatJaUusimmat(model);
+        model.addAttribute("uutiset", uutisetKategorianMukaan);
+        for (Uutinen uutinen : uutiset) {
+            for (Kategoria k: uutinen.getKategoriat()) {
+                System.out.println(k.getNimi());
+            }
+        }
+        return "index";
+    }
+    
+    
 
     @GetMapping("/uutinen/{id}")
     @Transactional
@@ -76,18 +130,8 @@ public class UutinenController {
         uutinenRepo.save(uutinen);
         uutinenRepo.flush();
         model.addAttribute("uutinen", uutinen);
-        Pageable luetuimmat = PageRequest.of(0, 10, Sort.Direction.DESC, "lukukerrat");
-        Pageable kymmenenUusinta = PageRequest.of(0, 5, Sort.Direction.ASC, "julkaisuaika");
-        model.addAttribute("uusimmat", uutinenRepo.findAll(kymmenenUusinta));
-        model.addAttribute("luetuimmat", uutinenRepo.findAll(luetuimmat));
+        lisaaLuetuimmatJaUusimmat(model);
         return "uutinen";
-    }
-
-    @GetMapping("/kuvapankki/{id}")
-    @Transactional
-    @ResponseBody
-    public byte[] naytaKuva(@PathVariable Long id) {
-        return uutiskuvaRepo.findById(id).get().getSisalto();
     }
 
     @DeleteMapping("/poistauutinen/{id}")
@@ -111,14 +155,21 @@ public class UutinenController {
     private void asetaTekijat(Uutinen uutinen, String tekijat) {
         String[] tekijatArray = tekijat.split(",");
         for (String nimi : tekijatArray) {
-            Tekija tekija = new Tekija();
-            tekija.setNimi(nimi.trim());
+            Tekija tekija;
             if (tekijaRepo.findByNimi(nimi) == null) {
-                tekijaRepo.save(tekija);
+                tekija = new Tekija();
+                tekija.setNimi(nimi.trim());
+            } else {
+                tekija = tekijaRepo.findByNimi(nimi);
             }
             if (uutinen.getTekijat() == null) {
                 uutinen.setTekijat(new ArrayList<>());
             }
+            if(tekija.getUutiset() == null) {
+                tekija.setUutiset(new ArrayList<>());
+            }
+            tekija.getUutiset().add(uutinen);
+            tekijaRepo.save(tekija);
             uutinen.getTekijat().add(tekija);
         }
     }
@@ -131,13 +182,30 @@ public class UutinenController {
             Kategoria kategoria;
             if (kategoriaRepo.findByNimi(k) == null) {
                 kategoria = new Kategoria(k, new ArrayList<>());
-                kategoriaRepo.save(kategoria);
+                
             } else {
                 kategoria = kategoriaRepo.findByNimi(k);   
             }
+            kategoriaRepo.saveAndFlush(kategoria);
             kategoria.getUutiset().add(uutinen);
             uutinen.getKategoriat().add(kategoria);
+            
         }
+    }
+
+    private void lisaaLuetuimmatJaUusimmat(Model model) {
+        Pageable luetuimmat = PageRequest.of(0, 10, Sort.Direction.DESC, "lukukerrat");
+        Pageable kymmenenUusinta = PageRequest.of(0, 5, Sort.Direction.ASC, "julkaisuaika");
+        model.addAttribute("uusimmat", uutinenRepo.findAll(kymmenenUusinta));
+        model.addAttribute("luetuimmat", uutinenRepo.findAll(luetuimmat));
+    }
+
+    private List<Uutinen> etsiKategoriat(List<Uutinen> uutiset, String kategoria) {
+        List<Uutinen> uutisetKategorianMukaan = new ArrayList<>();
+        uutiset.stream().filter((uutinen) -> (uutinen.getKategoriat().stream().findAny().get().getNimi().contains(kategoria))).forEach((uutinen) -> {
+            uutisetKategorianMukaan.add(uutinen);
+        });
+        return uutisetKategorianMukaan;
     }
 
 }

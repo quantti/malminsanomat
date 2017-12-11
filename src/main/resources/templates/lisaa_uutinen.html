@@ -13,19 +13,19 @@
             <form th:action="@{/lisaa-uutinen}" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="tekija">Tekijä(t), erota useammat pilkulla</label>
-                    <input type="text" class="form-control" id="tekija" aria-describedby="tekija" placeholder="Syötä tekijä(t)" name="tekija">
+                    <input type="text" class="form-control" id="tekija" aria-describedby="tekija" placeholder="Syötä tekijä(t)" name="tekija" required>
                 </div>
                 <div class="form-group">
                     <label for="otsikko">Uutisen otsikko</label>
-                    <input type="text" class="form-control" id="otsikko" placeholder="Uutisen otsikko" name="otsikko">
+                    <input type="text" class="form-control" id="otsikko" placeholder="Uutisen otsikko" name="otsikko" required>
                 </div>
                 <div class="form-group">
                     <label for="ingressi">Uutisen ingressi</label>
-                    <input type="text" class="form-control" id="ingressi" placeholder="Uutisen ingressi" name="ingressi">
+                    <input type="text" class="form-control" id="ingressi" placeholder="Uutisen ingressi" name="ingressi" required>
                 </div>
                 <div class="form-group">
                     <label for="teksti">Uutisen teksti</label>
-                    <input type="text" class="form-control" id="teksti" placeholder="Uutisen teksti" name="teksti">
+                    <input type="text" class="form-control" id="teksti" placeholder="Uutisen teksti" name="teksti" required>
                 </div>
                 <div class="form-check">
                     <label class="form-check-label">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
                     <label for="kuva">Uutisen kuva</label>
-                    <input type="file" class="form-control" id="kuva" name="kuva" />
+                    <input type="file" class="form-control" id="kuva" name="kuva" required />
                     
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

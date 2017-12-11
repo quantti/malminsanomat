@@ -17,6 +17,11 @@
                     <p th:text="${uusin.julkaisuaika}">aika</p>
                 </div>
             </a>
+            <a class="kuva">
+                <div class="container">
+                    <p class="lead">Luetuimmat</p>
+                </div>
+            </a>
             <a class="oikea_valikko kuva" th:each="luetuin : ${luetuimmat}" th:href="@{${'/uutinen/' + luetuin.id}}">
                 <div class="container">
                     <p th:text="${luetuin.otsikko}">otsikko</p>

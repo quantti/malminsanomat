@@ -1,13 +1,11 @@
 package wad.domain;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +23,7 @@ public class Uutinen extends AbstractPersistable<Long> {
     @Column(columnDefinition = "text")
     private String teksti;
     Long kuvaId;
-    private LocalDate julkaisuaika;
+    private LocalDateTime julkaisuaika;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Tekija> tekijat;
     @ManyToMany(mappedBy = "uutiset")
