@@ -65,6 +65,9 @@ public class UutinenController {
     @GetMapping("/uutinen/{id}")
     public String haeYksiUutinen(Model model, @PathVariable Long id) {
         Uutinen uutinen = uutinenRepo.getOne(id);
+        uutinen.kasvata();
+        uutinenRepo.save(uutinen);
+        uutinenRepo.flush();
         model.addAttribute("uutinen", uutinen);
         return "uutinen";
     }
