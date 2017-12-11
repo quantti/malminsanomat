@@ -1,0 +1,18 @@
+body {
+    background-color: #f2fff3;
+}
+
+a.valikko:link, a.valikko:visited, a.valikko:active  {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+a.valikko:hover {
+    color: #f2fff2;
+    text-decoration: none;
+}
+img {
+    max-width: 520px;
+    margin-top: 10px;
+    margin-left: 10px;
+}

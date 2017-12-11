@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import wad.domain.Tekija;
 import wad.domain.Uutinen;
@@ -29,21 +30,25 @@ import wad.repository.UutiskuvaRepository;
  */
 @Controller
 public class UutinenController {
+
     @Autowired
     private UutinenRepository uutinenRepo;
     @Autowired
     private UutiskuvaRepository uutiskuvaRepo;
     @Autowired
     private TekijaRepository tekijaRepo;
-    
+
     @PostMapping("/lisaa-uutinen")
-    public String lisaaUutinen(@RequestParam("kuva") MultipartFile kuva, @RequestParam("tekija") String tekijat, 
+    public String lisaaUutinen(@RequestParam("kuva") MultipartFile kuva, @RequestParam("tekija") String tekijat,
             @RequestParam("otsikko") String otsikko, @RequestParam("ingressi") String ingressi, @RequestParam("teksti") String teksti) throws IOException {
-        Uutiskuva uutiskuva = new Uutiskuva();
-        uutiskuva.setSisalto(kuva.getBytes());
-        uutiskuvaRepo.save(uutiskuva);
-        uutiskuvaRepo.flush();
-        Long kuvaId = uutiskuva.getId();
+        Long kuvaId = 0L;
+        if (kuva.getContentType().equalsIgnoreCase("image/jpeg")) {
+            Uutiskuva uutiskuva = new Uutiskuva();
+            uutiskuva.setSisalto(kuva.getBytes());
+            uutiskuvaRepo.save(uutiskuva);
+            uutiskuvaRepo.flush();
+            kuvaId = uutiskuva.getId();
+        }
         Uutinen uutinen = new Uutinen();
         uutinen.setIngressi(ingressi);
         uutinen.setKuvaId(kuvaId);
@@ -61,7 +66,7 @@ public class UutinenController {
         uutinenRepo.save(uutinen);
         return "redirect:/Ge6TQjGctR";
     }
-    
+
     @GetMapping("/uutinen/{id}")
     public String haeYksiUutinen(Model model, @PathVariable Long id) {
         Uutinen uutinen = uutinenRepo.getOne(id);
@@ -71,6 +76,11 @@ public class UutinenController {
         model.addAttribute("uutinen", uutinen);
         return "uutinen";
     }
-    
-    
+
+    @GetMapping("kuvapankki/{id}")
+    @ResponseBody
+    public byte[] naytaKuva(@PathVariable Long id) {
+        return uutiskuvaRepo.findById(id).get().getSisalto();
+    }
+
 }
