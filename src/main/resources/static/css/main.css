@@ -38,10 +38,12 @@ p.inlineTekija {
     display: inline-block;
 }
 
-oikea_valikko {
+a.kuva > div.container {
     background-color: white;
-    margin: 1rem 2rem 1rem 0rem;
     padding: 0.5rem;
+    border-style: none none solid none;
+    border-color: lightgrey;
+    border-width: 0.05rem;
 }
 
 .footer {

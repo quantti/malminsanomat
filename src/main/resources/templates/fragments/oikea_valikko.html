@@ -5,15 +5,24 @@
         <title>Oikea_valikko template</title>
     </head>
     <body>
-        <div class="col oikea_valikko" th:fragment="oikea_valikko">
-            <div class="container oikea_valikko" th:each="uusin : ${uusimmat}">
-                <p th:text="${uusin.otsikko}">otsikko</p>
-                <p th:text="${uusin.julkaisuaika}">aika</p>
-            </div>
-            <div class="container oikea_valikko" th:each="luetuin : ${luetuimmat}">
-                <p th:text="${luetuin.otsikko}">otsikko</p>
-                <p th:text="${luetuin.julkaisuaika}">aika</p>
-            </div>
+        <div class="col" th:fragment="oikea_valikko">
+            <a class="kuva">
+                <div class="container">
+                    <p class="lead">Uusimmat</p>
+                </div>
+            </a>
+            <a class="oikea_valikko kuva" th:each="uusin : ${uusimmat}"  th:href="@{${'/uutinen/' + uusin.id}}">
+                <div class="container">
+                    <p th:text="${uusin.otsikko}">otsikko</p>
+                    <p th:text="${uusin.julkaisuaika}">aika</p>
+                </div>
+            </a>
+            <a class="oikea_valikko kuva" th:each="luetuin : ${luetuimmat}" th:href="@{${'/uutinen/' + luetuin.id}}">
+                <div class="container">
+                    <p th:text="${luetuin.otsikko}">otsikko</p>
+                    <p th:text="${luetuin.julkaisuaika}">aika</p>
+                </div>
+            </a>
         </div>
     </body>
 </html>
