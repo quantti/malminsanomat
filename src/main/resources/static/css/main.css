@@ -13,7 +13,9 @@ a.valikko:hover {
 }
 img.uutiskuva {
     margin-top: 10px;
-    margin-left: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+    height: auto;
 }
 
 .headimage {
@@ -21,6 +23,10 @@ img.uutiskuva {
     padding: 1rem;
 }
 
-.headimage > img {
+.container > img {
     width: 100%;
+}
+
+p.inlineTekija {
+    display: inline-block;
 }

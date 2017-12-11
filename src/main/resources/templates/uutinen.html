@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head :: head">
-        
+
     </head>
     <div class="container">
         <header th:replace="fragments/header :: header">
@@ -11,19 +11,21 @@
         <main role="main">
             <div class="row">
                 <div class="col-8">
-                    <h2 th:text="${uutinen.otsikko}">Otsikko</h2>
-                    <p class="lead" th:text="${uutinen.ingressi}">ingressi</p>
-                    <div class="container">
-                        <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="img-responsive uutiskuva"/>
+                    
+                        <h2 th:text="${uutinen.otsikko}">Otsikko</h2>
+                        <p class="lead" th:text="${uutinen.ingressi}">ingressi</p>
+                        <div class="container">
+                            <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="img-responsive uutiskuva"/>
+                        </div>
+                        <p th:each="tekija : ${uutinen.tekijat}" th:text="${tekija.nimi}" class="inlineTekija">Tekija</p>
+                        <p th:text="${uutinen.teksti}">leipäteksti</p>
+                        <p th:each="kategoria : ${uutinen.kategoriat}" th:text="${kategoria.nimi}" class="inlineTekija">kategoria</p>
                     </div>
-                    <p th:each="tekija : ${uutinen.tekijat}" th:text="${tekija.nimi}">Tekija</p>
-                    <p th:text="${uutinen.teksti}">leipäteksti</p>
-                </div>
-                <div th:replace="fragments/oikea_valikko :: oikea_valikko">
-                    <p>Uusimmat ja suosituimmat</p>
-                </div>
+                    <div th:replace="fragments/oikea_valikko :: oikea_valikko">
+                        <p>Uusimmat ja suosituimmat</p>
+                    </div>
+                
             </div>
-
         </main>
 
         <footer class="footer">

@@ -23,6 +23,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @Entity
 public class Kategoria extends AbstractPersistable<Long> {
+    private String nimi;
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Uutinen> uutiset;
 }
