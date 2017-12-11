@@ -99,7 +99,7 @@ public class UutinenController {
         return uutiskuvaRepo.findById(id).get().getSisalto();
     }
     
-    @DeleteMapping("/uutinen/{id}")
+    @DeleteMapping("/poistauutinen/{id}")
     public String poistaUutinen(@PathVariable Long id) {
         uutinenRepo.deleteById(id);
         return "redirect:/";
