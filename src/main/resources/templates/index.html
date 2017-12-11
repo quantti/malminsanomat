@@ -1,41 +1,43 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/head :: head">
-        
-            
+
+
     </head>
     <div class="container">
         <header th:replace="fragments/header :: header">
             <p>header with links etc</p>
         </header>
-        
-
-      <main role="main">
 
 
+        <main role="main">
 
-          <div class="row">
-              <div class="col-8">
-                  <div class="container">
-                      <div class="card" th:each="uutinen : ${uutiset}">
-                          <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="card-img-top uutiskuva"/>
-                          <div class="card-block">
-                              <h3 th:text="${uutinen.otsikko}">otsikko</h3>
-                              <p class="card-text lead" th:text="${uutinen.ingressi}"></p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div th:replace="fragments/oikea_valikko :: oikea_valikko">
-                  <p>Uusimmat ja suosituimmat</p>
-              </div>
-          </div>
 
-      </main>
 
-      <footer class="footer">
-        <p>&copy; Kari Vänttinen 2017</p>
-      </footer>
+            <div class="row">
+                <div class="col-8">
+                    <div class="container">
+                        <a class="kuva" th:each="uutinen : ${uutiset}" th:href="@{${'/uutinen/' + uutinen.id}}">
+                            <div class="card">
+                                <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="card-img-top uutiskuva"/>
+                                <div class="card-block">
+                                    <h3 th:text="${uutinen.otsikko}">otsikko</h3>
+                                    <p class="card-text lead" th:text="${uutinen.ingressi}"></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div th:replace="fragments/oikea_valikko :: oikea_valikko">
+                    <p>Uusimmat ja suosituimmat</p>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer">
+            <p>&copy; Kari Vänttinen 2017</p>
+        </footer>
 
     </div> <!-- /container -->
 </html>

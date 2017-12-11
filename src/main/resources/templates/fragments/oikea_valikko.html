@@ -5,19 +5,15 @@
         <title>Oikea_valikko template</title>
     </head>
     <body>
-        <div class="col" th:fragment="oikea_valikko">
-            <ul th:each="uusin : ${uusimmat}">
-                <li>
-                    <p th:text="${uusin.otsikko}">otsikko</p>
-                    <p th:text="${uusin.julkaisuaika}">aika</p>
-                </li>
-            </ul>
-            <ul th:each="luetuin : ${luetuimmat}">
-                <li>
-                    <p th:text="${luetuin.otsikko}">otsikko</p>
-                    <p th:text="${luetuin.julkaisuaika}">aika</p>
-                </li>
-            </ul>
+        <div class="col oikea_valikko" th:fragment="oikea_valikko">
+            <div class="container oikea_valikko" th:each="uusin : ${uusimmat}">
+                <p th:text="${uusin.otsikko}">otsikko</p>
+                <p th:text="${uusin.julkaisuaika}">aika</p>
+            </div>
+            <div class="container oikea_valikko" th:each="luetuin : ${luetuimmat}">
+                <p th:text="${luetuin.otsikko}">otsikko</p>
+                <p th:text="${luetuin.julkaisuaika}">aika</p>
+            </div>
         </div>
     </body>
 </html>

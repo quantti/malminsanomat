@@ -17,9 +17,11 @@
                         <div class="container">
                             <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="img-responsive uutiskuva"/>
                         </div>
+                        <p class="inlineTekija">Kirjoittaja: </p>
                         <p th:each="tekija : ${uutinen.tekijat}" th:text="${tekija.nimi}" class="inlineTekija">Tekija</p>
                         <p th:text="${uutinen.teksti}">leipäteksti</p>
-                        <p th:each="kategoria : ${uutinen.kategoriat}" th:text="${kategoria.nimi}" class="inlineTekija">kategoria</p>
+                        <p class="inlineTekija">Kategoriat: </p>
+                        <p th:each="kategoria : ${uutinen.kategoriat}" th:text="${kategoria.nimi} +" class="inlineTekija">kategoria</p>
                     </div>
                     <div th:replace="fragments/oikea_valikko :: oikea_valikko">
                         <p>Uusimmat ja suosituimmat</p>

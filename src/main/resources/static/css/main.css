@@ -11,6 +11,13 @@ a.valikko:hover {
     color: #f2fff2;
     text-decoration: none;
 }
+
+a.kuva:link, a.kuva:visited, a.kuva:active, a.kuva:hover  {
+    color: #212529;
+    text-decoration: none;
+}
+
+
 img.uutiskuva {
     margin-top: 10px;
     margin-bottom: 10px;
@@ -29,4 +36,14 @@ img.uutiskuva {
 
 p.inlineTekija {
     display: inline-block;
+}
+
+oikea_valikko {
+    background-color: white;
+    margin: 1rem 2rem 1rem 0rem;
+    padding: 0.5rem;
+}
+
+.footer {
+    margin-top: 10rem;
 }
