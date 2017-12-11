@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -59,19 +60,7 @@ public class UutinenController {
         uutinen.setOtsikko(otsikko);
         uutinen.setTeksti(teksti);
         asetaTekijat(uutinen, tekijat);
-        for (String k : kategoriat) {
-            if (uutinen.getKategoriat() == null) {
-                uutinen.setKategoriat(new ArrayList<>());
-            }
-            Kategoria kategoria;
-            if (kategoriaRepo.findByNimi(k) == null) {
-                kategoria = new Kategoria(k, new ArrayList<>());
-                kategoriaRepo.save(kategoria);
-            } else {
-                kategoria = kategoriaRepo.findByNimi(k);
-            }
-            uutinen.getKategoriat().add(kategoria);
-        }
+        asetaKategoriat(uutinen, kategoriat);
         uutinen.setJulkaisuaika(LocalDate.now());
         uutinenRepo.save(uutinen);
         uutinenRepo.flush();
@@ -100,8 +89,9 @@ public class UutinenController {
     public byte[] naytaKuva(@PathVariable Long id) {
         return uutiskuvaRepo.findById(id).get().getSisalto();
     }
-    
+
     @DeleteMapping("/poistauutinen/{id}")
+    @Transactional
     public String poistaUutinen(@PathVariable Long id) {
         uutinenRepo.deleteById(id);
         return "redirect:/";
@@ -130,6 +120,23 @@ public class UutinenController {
                 uutinen.setTekijat(new ArrayList<>());
             }
             uutinen.getTekijat().add(tekija);
+        }
+    }
+
+    private void asetaKategoriat(Uutinen uutinen, String[] kategoriat) {
+        for (String k : kategoriat) {
+            if (uutinen.getKategoriat() == null) {
+                uutinen.setKategoriat(new ArrayList<>());
+            }
+            Kategoria kategoria;
+            if (kategoriaRepo.findByNimi(k) == null) {
+                kategoria = new Kategoria(k, new ArrayList<>());
+                kategoriaRepo.save(kategoria);
+            } else {
+                kategoria = kategoriaRepo.findByNimi(k);   
+            }
+            kategoria.getUutiset().add(uutinen);
+            uutinen.getKategoriat().add(kategoria);
         }
     }
 

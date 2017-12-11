@@ -16,13 +16,15 @@
 
           <div class="row">
               <div class="col-8">
-                  <ul th:each="uutinen : ${uutiset}">
-                      <li>
-                          <p th:text="${uutinen.id}"></p>
-                          <p th:text="${uutinen.otsikko}"></p>
-                          <p th:text="${uutinen.ingressi}"></p>
-                      </li>
-                  </ul>
+                  <div class="container">
+                      <div class="card" th:each="uutinen : ${uutiset}">
+                          <img th:src="@{${'/kuvapankki/' + uutinen.kuvaId}}" class="card-img-top uutiskuva"/>
+                          <div class="card-block">
+                              <h3 th:text="${uutinen.otsikko}">otsikko</h3>
+                              <p class="card-text lead" th:text="${uutinen.ingressi}"></p>
+                          </div>
+                      </div>
+                  </div>
               </div>
               <div th:replace="fragments/oikea_valikko :: oikea_valikko">
                   <p>Uusimmat ja suosituimmat</p>
