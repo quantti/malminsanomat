@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,6 +79,7 @@ public class UutinenController {
     }
 
     @GetMapping("kuvapankki/{id}")
+    @Transactional
     @ResponseBody
     public byte[] naytaKuva(@PathVariable Long id) {
         return uutiskuvaRepo.findById(id).get().getSisalto();
