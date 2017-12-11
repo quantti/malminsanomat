@@ -6,6 +6,7 @@
 package wad.domain;
 
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
@@ -21,10 +22,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 @Data
 @Entity
-public class Tekija extends AbstractPersistable<Long>{
-    private String nimi;
-    @ManyToMany(mappedBy = "tekijat")
+public class Kategoria extends AbstractPersistable<Long> {
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Uutinen> uutiset;
-    private String kayttajanimi;
-    private String salasana;
 }

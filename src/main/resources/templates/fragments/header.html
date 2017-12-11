@@ -6,22 +6,31 @@
         <title>Header template</title>
     </head>
     <body>
-        <div class="row">
-            <div class="col">
-                <h1 id="main-header" class="display-1">Malmin Sanomat</h1>
-            </div>
-        </div>
+
         <header class="header clearfix">
-            <nav>
-                <ul class="nav nav-pills float-left">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <div class="row">
+                <div class="col" style="background-color: #203a1f;">
+                    <h1 id="main-header" class="display-1" style="color: white">Malmin Sanomat</h1>
+                </div>
+            </div>
+            <nav class="navbar navbar-dark" style="background-color: #335b31;">
+                <ul class="nav float-left">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Kategoriat
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-menu" href="#">Paikalliset</a>
+                            <a class="dropdown-menu" href="#">Kotimaa</a>
+                            <a class="dropdown-menu" href="#">Urheilu</a>
+                            <a class="dropdown-menu" href="#">Kulttuuri</a>
+                        </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">About</a>
+                        <a class="nav-link" href="#">Sää</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        <a class="nav-link" href="#">Yhteys</a>
                     </li>
                 </ul>
             </nav>

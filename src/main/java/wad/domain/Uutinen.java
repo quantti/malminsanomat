@@ -2,7 +2,10 @@ package wad.domain;
 
 import java.time.LocalDate;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -18,10 +21,18 @@ public class Uutinen extends AbstractPersistable<Long> {
 
     private String otsikko;
     private String ingressi;
+    @Lob
+    @Column(columnDefinition = "text")
     private String teksti;
-    @OneToOne
-    private Uutiskuva kuva;
+    Long kuvaId;
     private LocalDate julkaisuaika;
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Tekija> tekijat;
+    @ManyToMany(mappedBy = "uutiset")
+    private List<Kategoria> kategoriat;
+    private int lukukerrat;
+    
+    public void kasvata() {
+        this.lukukerrat++;
+    }
 }

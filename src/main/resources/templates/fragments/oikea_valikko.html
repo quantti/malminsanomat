@@ -6,8 +6,18 @@
     </head>
     <body>
         <div class="col" th:fragment="oikea_valikko">
-            <p>Uusimmat</p>
-            <p>Luetuimmat</p>
+            <ul th:each="uusin : ${uusimmat}">
+                <li>
+                    <p th:text="${uusin.otsikko}">otsikko</p>
+                    <p th:text="${uusin.julkaisuaika}">aika</p>
+                </li>
+            </ul>
+            <ul th:each="luetuin : ${luetuimmat}">
+                <li>
+                    <p th:text="${luetuin.otsikko}">otsikko</p>
+                    <p th:text="${luetuin.julkaisuaika}">aika</p>
+                </li>
+            </ul>
         </div>
     </body>
 </html>

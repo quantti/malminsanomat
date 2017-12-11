@@ -26,5 +26,5 @@ public class Uutiskuva extends AbstractPersistable<Long> {
     
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte[] kuva;
+    private byte[] sisalto;
 }
