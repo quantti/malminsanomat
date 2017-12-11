@@ -69,6 +69,7 @@ public class UutinenController {
     }
 
     @GetMapping("/uutinen/{id}")
+    @Transactional
     public String haeYksiUutinen(Model model, @PathVariable Long id) {
         Uutinen uutinen = uutinenRepo.getOne(id);
         uutinen.kasvata();
